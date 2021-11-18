@@ -1,14 +1,11 @@
 require("dotenv").config();
 const { PORT = 3001, DATABASE_URL } = process.env;
 const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-const bcrypt = require("bcrypt");
 const AuthRouter = require("./routes/user.js");
-const user = require("./models/user.js");
 const Collections = require("./routes/collections.js");
 
 ////////////////////////
