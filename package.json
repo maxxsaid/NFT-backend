@@ -2,13 +2,14 @@
   "name": "nft-backend",
   "version": "1.0.0",
   "engine": {
-    "node": "17.x",
-    "npm": "8.*"
+    "node": "^17",
+    "npm": "^8"
   },
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
