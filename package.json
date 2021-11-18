@@ -2,7 +2,7 @@
   "name": "nft-backend",
   "version": "1.0.0",
   "engine": {
-    "node": "^12 || ^14 || ^16"
+    "node": "^12 || ^14 || ^17"
   },
   "description": "",
   "main": "server.js",
