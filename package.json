@@ -2,7 +2,8 @@
   "name": "nft-backend",
   "version": "1.0.0",
   "engine": {
-    "node": "17.x"
+    "node": "17.x",
+    "npm": "8.*"
   },
   "description": "",
   "main": "server.js",
