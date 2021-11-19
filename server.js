@@ -9,41 +9,46 @@ const bcrypt = require("bcrypt");
 const AuthRouter = require("./controller/user.js")
 const user = require("./models/user.js")
 const auth = require("./auth")
+const Collections = require("./routes/collections.js")
 
 ////////////////////////
 // Connection
 ///////////////////////
 
 mongoose.connect(DATABASE_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-})
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
 mongoose.connection
-.on("open", () => console.log("Connected to mongoose"))
-.on("close", () => console.log("Disconnected from mongoose"))
-.on("error", (error) => console.log(error))
+  .on("open", () => console.log("Connected to mongoose"))
+  .on("close", () => console.log("Disconnected from mongoose"))
+  .on("error", (error) => console.log(error));
 
 // ============================//
 
 //====== Schema & Model =======//
 
-const nftSchema = new mongoose.Schema ({
+const nftSchema = new mongoose.Schema(
+  {
     name: "",
     image_url: "",
     external_link: "",
     description: "",
     traits: "",
-    stats: ""
-},{timestamps: true})
+    stats: "",
+  },
+  { timestamps: true }
+);
 
-const NFT = mongoose.model("NFT", nftSchema)
+const NFT = mongoose.model("NFT", nftSchema);
 
 /////////////////////////
 // Middleware
 /////////////////////////
-app.use(cors())
-app.use(morgan("dev"))
-app.use(express.json())
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
+
 //////////////////////
 // Routes
 //////////////////////
@@ -53,8 +58,9 @@ app.get("/", auth,(req, res)=>{
 });
 
 //Auth Route
-app.use("/auth", AuthRouter);
-
+app.use("/user", AuthRouter);
+//collections route
+app.use("/collections", Collections);
 // Test route
 app.get("/", (req, res) => {
     res.send("hello world");
@@ -115,10 +121,12 @@ app.put('/nft/:id', async (req, res)=>{
 });
 
 
+  res.send("hello world");
+});
 
 ////////////////////////
 // Listener
 ///////////////////////
 app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+  console.log(`Listening on port ${PORT}`);
+});
