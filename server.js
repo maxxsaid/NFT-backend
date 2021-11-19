@@ -6,7 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 const AuthRouter = require("./routes/user.js");
-const Collections = require("./routes/collections.js");
+const Assets = require("./routes/assets.js");
 
 ////////////////////////
 // Connection
@@ -52,7 +52,7 @@ app.use(express.json());
 //Auth Route
 app.use("/user", AuthRouter);
 //collections route
-app.use("/collections", Collections);
+app.use("/assets", Assets);
 // Test route
 app.get("/", (req, res) => {
   res.send("hello world");
