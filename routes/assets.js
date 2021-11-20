@@ -2,9 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const fetch = (url) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(url));
+import("node-fetch").then(({ default: fetch }) => fetch(url));
 let [response, data] = [null, null];
-const Assets = require("../models/Assets.js");
 const SALE_COUNT_URL =
   "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
 
@@ -13,7 +12,7 @@ const getAssets = async () => {
   response = await fetch(SALE_COUNT_URL);
   data = await response.json();
   data.assets.forEach((asset) => {
-    Assets.create({
+    asset.create({
       name: asset.name,
       sales: asset.num_sales,
       img: asset.collection.image_url,
@@ -36,7 +35,7 @@ router.get("/", (req, res) => {
     .catch((error) => res.error(error));
 });
 
-router.get("/cllect", (req, res) => {
+router.get("/collect", (req, res) => {
   getAssets();
   Assets.find({})
     .then((Assets) => {
