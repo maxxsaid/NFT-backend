@@ -62,7 +62,7 @@ app.get("/", auth,(req, res)=>{
 //Auth Route
 app.use("/user", AuthRouter);
 //collections route
-app.use("/collections", Collections);
+app.use("/assets", Assets);
 // Test route
 app.get("/", (req, res) => {
     res.send("hello world");
