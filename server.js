@@ -6,7 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 const AuthRouter = require("./routes/user.js");
-const Assets = require("./routes/assets.js");
+const Assets = require("./models/assets.js");
 
 ////////////////////////
 // Connection
