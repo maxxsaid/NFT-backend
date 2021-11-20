@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 module.exports = mongoose.model(
   "asset",
@@ -13,4 +14,4 @@ module.exports = mongoose.model(
   })
 );
 
-module.exports = Collections
+module.exports = assets

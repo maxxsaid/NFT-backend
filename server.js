@@ -10,7 +10,8 @@ const bcrypt = require("bcrypt");
 const AuthRouter = require("./controller/user.js")
 const user = require("./models/user.js")
 const auth = require("./auth")
-const Collections = require("./routes/Collections.js")
+// const Collections = require("./routes/Collections.js")
+const Assets = require("./routes/assets.js");
 require("dotenv").config()
 
 ////////////////////////
