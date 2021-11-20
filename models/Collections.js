@@ -13,3 +13,5 @@ module.exports = mongoose.model(
     date_created: String,
   })
 );
+
+module.exports = Collections

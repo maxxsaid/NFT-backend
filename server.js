@@ -1,4 +1,5 @@
-require("dotenv").config()
+
+// require({ SECRET }) = process.env
 const { PORT = 3001, DATABASE_URL } = process.env
 const express = require("express")
 const mongoose = require("mongoose")
@@ -9,7 +10,8 @@ const bcrypt = require("bcrypt");
 const AuthRouter = require("./controller/user.js")
 const user = require("./models/user.js")
 const auth = require("./auth")
-const Collections = require("./routes/collections.js")
+const Collections = require("./routes/Collections.js")
+require("dotenv").config()
 
 ////////////////////////
 // Connection
@@ -121,8 +123,7 @@ app.put('/nft/:id', async (req, res)=>{
 });
 
 
-  res.send("hello world");
-});
+
 
 ////////////////////////
 // Listener
