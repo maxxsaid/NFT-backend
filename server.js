@@ -1,18 +1,12 @@
-
-// require({ SECRET }) = process.env
-const { PORT = 3001, DATABASE_URL } = process.env
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors")
-const morgan = require("morgan")
-const app = express()
-const bcrypt = require("bcrypt");
-const AuthRouter = require("./controller/user.js")
-const user = require("./models/user.js")
-const auth = require("./auth")
-// const Collections = require("./routes/Collections.js")
-const Assets = require("./routes/assets.js");
-require("dotenv").config()
+require("dotenv").config();
+const { PORT, DATABASE_URL } = process.env;
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const morgan = require("morgan");
+const app = express();
+const AuthRouter = require("./routes/user.js");
+const Assets = require("./models/assets.js");
 
 ////////////////////////
 // Connection
