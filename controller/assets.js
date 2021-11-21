@@ -17,7 +17,7 @@ const getAssets = async () => {
   response = await fetch(SALE_COUNT_URL);
   data = await response.json();
   data.assets.forEach((asset) => {
-    asset.create({
+    Assets.create({
       name: asset.name,
       sales: asset.num_sales,
       img: asset.collection.image_url,
@@ -52,7 +52,7 @@ router.get("/collect", (req, res) => {
 
 
 // Index NFTs
-app.get('/:id',auth, async (req, res)=> {
+router.get('/:id',auth, async (req, res)=> {
     try{
     const { username } = req.payload
     req.body.username = username 
@@ -64,7 +64,7 @@ app.get('/:id',auth, async (req, res)=> {
 });
 
 //Create NFTs
-app.post('/nft', auth,  async (req, res)=> {
+router.post('/nft', auth,  async (req, res)=> {
     try {
         const { username } = req.payload
         req.body.username = username 
@@ -75,7 +75,7 @@ app.post('/nft', auth,  async (req, res)=> {
 });
 
 //Update NFTs
-app.put('/nft/:id', auth ,  async (req, res) => {
+router.put('/nft/:id', auth ,  async (req, res) => {
     try {
         const { username } = req.payload
         req.body.username = username 
@@ -86,7 +86,7 @@ app.put('/nft/:id', auth ,  async (req, res) => {
 });
 
 //Edit NFT information
-app.put('/nft/edit/:id', async (req, res)=> {
+router.put('/nft/edit/:id', async (req, res)=> {
     try {
         res.json(await NFT.findByIdAndUpdate(req.params.id, req.body, { }));
     } catch (error) {
@@ -95,7 +95,7 @@ app.put('/nft/edit/:id', async (req, res)=> {
 });
 
 // Delete NFT
-app.put('/nft/:id', async (req, res)=>{
+router.put('/nft/:id', async (req, res)=>{
     try {
         res.json(await NFT.findByIdAndRemove(req.params.id));
     } catch (error) {
@@ -104,7 +104,7 @@ app.put('/nft/:id', async (req, res)=>{
 });
 
 // Show NFTs
-app.put('/nft/:id', async (req, res)=>{
+router.put('/nft/:id', async (req, res)=>{
     try{
         res.json(await NFT.find(req.params.id))
     } catch (error) {

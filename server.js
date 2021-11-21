@@ -1,30 +1,56 @@
-require("dotenv").config();
-const { PORT, DATABASE_URL } = process.env;
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const morgan = require("morgan");
-const app = express();
-const AuthRouter = require("./controller/user.js");
-const Assets = require("./controller/assets.js");
+//////////////////////////
+// Dependencies
+//////////////////////////
+require("dotenv").config()
+const { PORT = 4000, DATABASE_URL } = process.env
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const morgan = require("morgan")
+const app = express()
+
+////////////////////////
+// Connection
+///////////////////////
+mongoose.connect(DATABASE_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+})
+mongoose.connection
+.on("open", () => console.log("Connected to mongoose"))
+.on("close", () => console.log("Disconnected from mongoose"))
+.on("error", (error) => console.log(error))
 
 ////////////////////////
 
 //====== Schema & Model =======//
 
-const nftSchema = new mongoose.Schema(
-  {
-    name: "",
-    image_url: "",
-    external_link: "",
-    description: "",
-    traits: "",
-    stats: "",
-  },
-  { timestamps: true }
-);
+const fetch = (url) =>
+import("node-fetch").then(({ default: fetch }) => fetch(url));
+let [response, data] = [null, null];
+const SALE_COUNT_URL =
+  "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
 
-const NFT = mongoose.model("NFT", nftSchema);
+const getAssets = async () => {
+  Assets.deleteMany({});
+  response = await fetch(SALE_COUNT_URL);
+  data = await response.json();
+  data.assets.forEach((asset) => {
+    Assets.create({
+      name: asset.name,
+      sales: asset.num_sales,
+      img: asset.collection.image_url,
+      site: asset.external_link,
+      slug: asset.collection.slug,
+      description: asset.description,
+      date_created: asset.date_created,
+    });
+  });
+};
+getAssets()
+
+  const Assets = mongoose.model("Assets", assetSchema)
+
 
 /////////////////////////
 // Middleware
@@ -37,14 +63,6 @@ app.use(express.json());
 // Routes
 //////////////////////
 
-app.get("/", auth,(req, res)=>{
-    res.json(req.payload)
-});
-
-//Auth Route
-app.use("/user", AuthRouter);
-//collections route
-app.use("/assets", Assets);
 // Test route
 app.get("/", (req, res) => {
     res.send("hello world");
@@ -53,7 +71,7 @@ app.get("/", (req, res) => {
 // Index NFTs
 app.get('/nft', async (req, res)=> {
     try{
-    res.json(await NFT.find({}))
+    res.json(await Assets.find({}))
     } catch (error) {
         res.status(400).json(error)
     }
@@ -62,7 +80,7 @@ app.get('/nft', async (req, res)=> {
 //Create NFTs
 app.post('/nft', async (req, res)=> {
     try {
-        res.json(await NFT.create(req.body));
+        res.json(await Assets.create(req.body));
     } catch (error) {
         res.status(400).json(error)
     }
@@ -71,34 +89,17 @@ app.post('/nft', async (req, res)=> {
 //Update NFTs
 app.put('/nft/:id', async (req, res) => {
     try {
-        res.json(await NFT.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+        res.json(await Assets.findByIdAndUpdate(req.params.id, req.body, { new: true }));
     } catch (error) {
         res.status(400).json(error)
     }
 });
 
-//Edit NFT information
-app.put('/nft/edit/:id', async (req, res)=> {
-    try {
-        res.json(await NFT.findByIdAndUpdate(req.params.id, req.body, { }));
-    } catch (error) {
-        res.status(400).json(error)
-    }
-});
 
 // Delete NFT
-app.put('/nft/:id', async (req, res)=>{
+app.delete('/nft/:id', async (req, res)=>{
     try {
-        res.json(await NFT.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        res.status(400).json(erro)
-    }
-});
-
-// Show NFTs
-app.put('/nft/:id', async (req, res)=>{
-    try{
-        res.json(await NFT.find(req.params.id))
+        res.json(await Assets.findByIdAndRemove(req.params.id));
     } catch (error) {
         res.status(400).json(error)
     }
