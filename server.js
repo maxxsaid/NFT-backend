@@ -6,22 +6,9 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 const AuthRouter = require("./routes/user.js");
-const Assets = require("./models/assets.js");
+const Assets = require("./routes/assets.js");
 
 ////////////////////////
-// Connection
-///////////////////////
-
-mongoose.connect(DATABASE_URL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-mongoose.connection
-  .on("open", () => console.log("Connected to mongoose"))
-  .on("close", () => console.log("Disconnected from mongoose"))
-  .on("error", (error) => console.log(error));
-
-// ============================//
 
 //====== Schema & Model =======//
 
