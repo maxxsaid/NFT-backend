@@ -1,6 +1,10 @@
 const mongoose = require("./connection.js");
+
 const {Schema, model} = mongoose;
+
+
 const assetSchema = new Schema({
+    username: {type: String, required: true},
     name: String,
     sales: Number,
     img: String,
@@ -8,7 +12,7 @@ const assetSchema = new Schema({
     slug: String,
     description: String,
     date_created: String,
-  })
+  }, {timestamps: true})
 
   const Assets = model("Assets", assetSchema)
 

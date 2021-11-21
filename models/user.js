@@ -1,4 +1,8 @@
+/////////////////////////////////
+// Dependencies
+///////////////////////////////
 const mongoose = require("./connection.js")
+
 const { Schema, model } = mongoose
 
 const userSchema = new Schema({

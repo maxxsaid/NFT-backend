@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //////////////////////////
 // Dependencies
 //////////////////////////
@@ -51,6 +52,19 @@ getAssets()
 
   const Assets = mongoose.model("Assets", assetSchema)
 
+=======
+require("dotenv").config();
+const { PORT, DATABASE_URL } = process.env;
+const express = require("express");
+const mongoose = require("./models/connection.js");
+const cors = require("cors");
+const morgan = require("morgan");
+const app = express();
+const UserRouter = require("./controller/user.js");
+const AssetRouter = require("./controller/assets.js")
+const auth = require("./auth")
+
+>>>>>>> dev
 
 /////////////////////////
 // Middleware
@@ -62,6 +76,7 @@ app.use(express.json());
 //////////////////////
 // Routes
 //////////////////////
+<<<<<<< HEAD
 
 // Test route
 app.get("/", (req, res) => {
@@ -85,6 +100,22 @@ app.post('/nft', async (req, res)=> {
         res.status(400).json(error)
     }
 });
+=======
+//Auth Route
+
+app.get("/", auth, (req, res) => {
+    res.json(req.payload)
+})
+app.use("/user", UserRouter);
+app.use("/assets", AssetRouter)
+
+// //collections route
+// app.use("/assets", Assets);
+// // Test route
+// app.get("/", (req, res) => {
+//   res.send("hello world");
+// });
+>>>>>>> dev
 
 //Update NFTs
 app.put('/nft/:id', async (req, res) => {
