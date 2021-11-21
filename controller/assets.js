@@ -1,7 +1,6 @@
-const mongoose = require("./connection.js");
+const mongoose = require("../models/connection.js");
 const {Schema, model} = mongoose;
 const auth = require("../auth")
-const { router } = router()
 const Assets = require("../models/Assets.js")
 const express = require("express");
 const router = express.Router();
