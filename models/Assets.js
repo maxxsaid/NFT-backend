@@ -4,7 +4,6 @@ const {Schema, model} = mongoose;
 
 
 const assetSchema = new Schema({
-    username: {type: String, required: true},
     name: String,
     sales: Number,
     img: String,
