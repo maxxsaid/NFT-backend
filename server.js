@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-const AuthRouter = require("./routes/user.js");
-const Assets = require("./models/assets.js");
+const AuthRouter = require("./controller/user.js");
+const Assets = require("./controller/assets.js");
 
 ////////////////////////
 // Connection
