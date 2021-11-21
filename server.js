@@ -5,26 +5,44 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-const AuthRouter = require("./controller/user.js");
-const Assets = require("./controller/assets.js");
-
+// const Assets = require("../models/Assets.js")
+// const AuthRouter = require("./controller/user.js");
+// const Assets = require("./controller/assets.js");
+// const auth = require("./auth/index.js")
 ////////////////////////
 
 //====== Schema & Model =======//
 
-const nftSchema = new mongoose.Schema(
-  {
-    name: "",
-    image_url: "",
-    external_link: "",
-    description: "",
-    traits: "",
-    stats: "",
-  },
-  { timestamps: true }
-);
+const assetSchema = new mongoose.Schema({
+    name: String,
+    sales: Number,
+    img: String,
+    site: String,
+    slug: String,
+    description: String,
+    date_created: String,
+  })
 
-const NFT = mongoose.model("NFT", nftSchema);
+//   const Assets = model("Assets", assetSchema)
+
+///======== Mongoose Connection === //
+
+const CONFIG = {
+    useNewParser: true,
+    useUnifiedTopology: true,
+}
+
+mongoose.connect(DATABASE_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
+  mongoose.connection
+    .on("open", () => console.log("Connected to mongoose"))
+    .on("close", () => console.log("Disconnected from mongoose"))
+    .on("error", (error) => console.log(error));
+
+module.exports = mongoose
+
 
 /////////////////////////
 // Middleware
@@ -37,15 +55,17 @@ app.use(express.json());
 // Routes
 //////////////////////
 
-app.get("/", auth,(req, res)=>{
-    res.json(req.payload)
-});
+// app.get("/", auth,(req, res)=>{
+//     res.json(req.payload)
+// });
 
-//Auth Route
-app.use("/user", AuthRouter);
-//collections route
-app.use("/assets", Assets);
-// Test route
+// //Auth Route
+// app.use("/user", AuthRouter);
+// //collections route
+// app.use("/assets", Assets);
+// // Test route
+
+// Test Route
 app.get("/", (req, res) => {
     res.send("hello world");
   });
@@ -53,7 +73,7 @@ app.get("/", (req, res) => {
 // Index NFTs
 app.get('/nft', async (req, res)=> {
     try{
-    res.json(await NFT.find({}))
+    res.json(await Assets.find({}))
     } catch (error) {
         res.status(400).json(error)
     }
@@ -62,48 +82,31 @@ app.get('/nft', async (req, res)=> {
 //Create NFTs
 app.post('/nft', async (req, res)=> {
     try {
-        res.json(await NFT.create(req.body));
+        res.json(await Assets.create(req.body));
     } catch (error) {
         res.status(400).json(error)
     }
 });
 
 //Update NFTs
-app.put('/nft/:id', async (req, res) => {
+app.post('/nft/:id', async (req, res) => {
     try {
-        res.json(await NFT.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+        res.json(await Assets.findByIdAndUpdate(req.params.id, req.body, { new: true }));
     } catch (error) {
         res.status(400).json(error)
     }
 });
 
-//Edit NFT information
-app.put('/nft/edit/:id', async (req, res)=> {
-    try {
-        res.json(await NFT.findByIdAndUpdate(req.params.id, req.body, { }));
-    } catch (error) {
-        res.status(400).json(error)
-    }
-});
+
 
 // Delete NFT
-app.put('/nft/:id', async (req, res)=>{
+app.delete('/nft/:id', async (req, res)=>{
     try {
-        res.json(await NFT.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        res.status(400).json(erro)
-    }
-});
-
-// Show NFTs
-app.put('/nft/:id', async (req, res)=>{
-    try{
-        res.json(await NFT.find(req.params.id))
+        res.json(await Assets.findByIdAndRemove(req.params.id));
     } catch (error) {
         res.status(400).json(error)
     }
 });
-
 
 
 
