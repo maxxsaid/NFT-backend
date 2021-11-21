@@ -9,19 +9,6 @@ const AuthRouter = require("./controller/user.js");
 const Assets = require("./controller/assets.js");
 
 ////////////////////////
-// Connection
-///////////////////////
-
-mongoose.connect(DATABASE_URL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-mongoose.connection
-  .on("open", () => console.log("Connected to mongoose"))
-  .on("close", () => console.log("Disconnected from mongoose"))
-  .on("error", (error) => console.log(error));
-
-// ============================//
 
 //====== Schema & Model =======//
 
