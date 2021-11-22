@@ -1,19 +1,23 @@
 {
   "name": "nft-backend",
   "version": "1.0.0",
-  "engine": {
-    "node": "^12 || ^14 || ^17"
-  },
   "description": "# Project Summary -  This application provides the user a storage of all the NFTs. User gets to sign in, add NFTs in his own collection, access each individual NFT and read about it more indepth or delete it. The main home page will have a carousel of random NFTs. User will also be able to browse to see other NFTs. The goal is to make an \"instagram\" for NFTs. The functionalities of this application are outlined below:",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "webpack"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rebuke-devour/NFT-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rebuke-devour/NFT-backend/issues"
+  },
+  "homepage": "https://github.com/rebuke-devour/NFT-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
