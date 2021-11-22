@@ -34,6 +34,16 @@ app.use("/assets", AssetRouter)
 //   res.send("hello world");
 // });
 
+app.get("/nft", (req, res)=> {
+    try {
+        res.json(await Assets.find(req.body))
+    } catch(error) {
+        res.status(400).json(error)
+    }  
+})
+
+
+
 //Update NFTs
 app.post('/nft/:id', async (req, res) => {
     try {
