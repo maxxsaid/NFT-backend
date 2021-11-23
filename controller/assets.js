@@ -29,9 +29,9 @@ const getAssets = async () => {
 getAssets();
 
 //Index Route
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const { username } = req.payload;
+    const { username } = req.body;
     res.status(200).json(await Assets.find({ username }));
   } catch (error) {
     res.status(400).json({ error });
@@ -39,7 +39,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 //Create Route
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { username } = req.payload;
     req.body.username = username;
@@ -49,7 +49,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 //Update Route
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const { username } = req.payload;
     req.body.username = username;
@@ -62,7 +62,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 //Destroy Route
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     res.status(200).json(await Assets.findByIdAndDelete(id));

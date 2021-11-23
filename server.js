@@ -7,8 +7,8 @@ const morgan = require("morgan");
 const app = express();
 const UserRouter = require("./controller/user.js");
 const AssetRouter = require("./controller/assets.js");
-const auth = require("./auth");
-
+// const auth = require("./auth");
+// const Assets = require("./models/Assets.js")
 /////////////////////////
 // Middleware
 /////////////////////////
@@ -20,7 +20,9 @@ app.use(express.json());
 // Routes
 //////////////////////
 
-app.get("/", auth, (req, res) => {
+app.get("/", (req, res) => {
+    console.log("hit")
+    console.log("req", req)
   res.json(req.payload);
 });
 app.use("/user", UserRouter);
@@ -29,9 +31,9 @@ app.use("/assets", AssetRouter);
 // //collections route
 // app.use("/assets", Assets);
 // // Test route
-// app.get("/", (req, res) => {
-//   res.send("hello world");
-// });
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
 app.get("/nft", (req, res) => {
   try {
