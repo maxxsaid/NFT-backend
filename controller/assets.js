@@ -6,12 +6,12 @@ const auth = require("../auth");
 
 const fetch = (url) =>
   import("node-fetch").then(({ default: fetch }) => fetch(url));
-let [response, data] = [null, null];
+
 const SALE_COUNT_URL =
   "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
-
 const getAssets = async () => {
-  Assets.deleteMany({});
+  await Assets.deleteMany({});
+  let [response, data] = [null, null];
   response = await fetch(SALE_COUNT_URL);
   data = await response.json();
   data.assets.forEach((asset) => {
