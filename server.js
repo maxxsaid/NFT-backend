@@ -8,7 +8,7 @@ const app = express();
 const UserRouter = require("./controller/user.js");
 const AssetRouter = require("./controller/assets.js");
 // const auth = require("./auth");
-// const Assets = require("./models/Assets.js")
+const Assets = require("./models/Assets.js");
 /////////////////////////
 // Middleware
 /////////////////////////
@@ -21,8 +21,8 @@ app.use(express.json());
 //////////////////////
 
 app.get("/", (req, res) => {
-    console.log("hit")
-    console.log("req", req)
+  console.log("hit");
+  console.log("req", req);
   res.json(req.payload);
 });
 app.use("/user", UserRouter);
