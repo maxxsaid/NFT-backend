@@ -1,9 +1,9 @@
 const mongoose = require("./connection.js");
 
-const {Schema, model} = mongoose;
+const { Schema, model } = mongoose;
 
-
-const assetSchema = new Schema({
+const assetSchema = new Schema(
+  {
     name: String,
     sales: Number,
     img: String,
@@ -11,8 +11,10 @@ const assetSchema = new Schema({
     slug: String,
     description: String,
     date_created: String,
-  }, {timestamps: true})
+  },
+  { timestamps: true }
+);
 
-  const Assets = model("Assets", assetSchema)
+const Assets = model("Assets", assetSchema);
 
-module.exports = Assets
+module.exports = Assets;
