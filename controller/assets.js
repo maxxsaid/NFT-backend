@@ -8,27 +8,24 @@ const fetch = (url) =>
 
 const SALE_COUNT_URL =
   "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
-const getAssets = async () => {
-  let [response, data] = [null, null];
-  await Assets.deleteMany({});
-  response = await fetch(SALE_COUNT_URL);
-  data = await response.json();
-  data.assets.forEach((asset) => {
-    Assets.create({
-      name: asset.name,
-      sales: asset.num_sales,
-      img: asset.collection.image_url,
-      site: asset.external_link,
-      slug: asset.collection.slug,
-      description: asset.description,
-      date_created: asset.date_created,
+fetch(SALE_COUNT_URL)
+  .then((response) => response.json())
+  .then((data) => {
+    data.assets.forEach((asset) => {
+      Assets.create({
+        name: asset.name,
+        sales: asset.num_sales,
+        img: asset.collection.image_url,
+        site: asset.external_link,
+        slug: asset.collection.slug,
+        description: asset.description,
+        date_created: asset.date_created,
+      });
     });
   });
-};
 
 //Index Route
 router.get("/", async (req, res) => {
-  getAssets();
   try {
     res.status(200).json(await Assets.find({}));
   } catch (error) {

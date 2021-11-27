@@ -2,17 +2,15 @@ require("dotenv").config();
 const { PORT, DATABASE_URL } = process.env;
 const express = require("express");
 const mongoose = require("./models/connection.js");
-const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-const UserRouter = require("./controller/user.js");
+// const UserRouter = require("./controller/user.js");
 const AssetRouter = require("./controller/assets.js");
 // const auth = require("./auth");
 const Assets = require("./models/Assets.js");
 /////////////////////////
 // Middleware
 /////////////////////////
-app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -25,7 +23,7 @@ app.get("/", (req, res) => {
   console.log("req", req);
   res.json(req.payload);
 });
-app.use("/user", UserRouter);
+// app.use("/user", UserRouter);
 app.use("/assets", AssetRouter);
 
 // //collections route
