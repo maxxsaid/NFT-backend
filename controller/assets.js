@@ -6,7 +6,8 @@ const fetch = (url) =>
   import("node-fetch").then(({ default: fetch }) => fetch(url));
 
 const SALE_COUNT_URL =
-  "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
+  "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=40";
+Assets.deleteMany({}).then(console.log("deleted"));
 fetch(SALE_COUNT_URL)
   .then((response) => response.json())
   .then((data) => {
@@ -26,9 +27,9 @@ fetch(SALE_COUNT_URL)
 //Index Route
 router.get("/", async (req, res) => {
   try {
-    res.status(200).json(await Assets.find({}));
+    res.json(await Assets.find({}));
   } catch (error) {
-    res.status(400).json({ error });
+    res.json({ error });
   }
 });
 
@@ -49,27 +50,26 @@ router.post("/", async (req, res) => {
       description: asset.description,
     });
   } catch (error) {
-    res.status(400).json({ error });
+    res.json({ error });
   }
 });
 //Update Route
 router.put("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    res
-      .status(200)
-      .json(await Assets.findByIdAndUpdate(id, req.body, { new: true }));
+    const id = req.params.id;
+
+    res.json(await Assets.findByIdAndUpdate(id, req.body, { new: true }));
   } catch (error) {
-    res.status(400).json({ error });
+    res.json({ error });
   }
 });
 //Destroy Route
 router.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    res.status(200).json(await Assets.findByIdAndDelete(id));
+    const id = req.params.id;
+    res.json(await Assets.findByIdAndDelete(id));
   } catch (error) {
-    res.status(400).json({ error });
+    res.json({ error });
   }
 });
 module.exports = router;

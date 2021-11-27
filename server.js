@@ -8,11 +8,14 @@ const app = express();
 const AssetRouter = require("./controller/assets.js");
 // const auth = require("./auth");
 const Assets = require("./models/Assets.js");
+const cors = require("cors");
+
 /////////////////////////
 // Middleware
 /////////////////////////
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
 
 //////////////////////
 // Routes
@@ -26,32 +29,6 @@ app.use("/assets", AssetRouter);
 // // Test route
 app.get("/", (req, res) => {
   res.send("hello world");
-});
-
-app.get("/nft", (req, res) => {
-  try {
-    res.json(Assets.find({}));
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-//Update NFTs
-app.post("/nft/:id", (req, res) => {
-  try {
-    res.json(Assets.findByIdAndUpdate(req.params.id, req.body, { new: true }));
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-// Delete NFT
-app.delete("/nft/:id", (req, res) => {
-  try {
-    res.json(Assets.findByIdAndRemove(req.params.id));
-  } catch (error) {
-    res.status(400).json(error);
-  }
 });
 
 ////////////////////////
