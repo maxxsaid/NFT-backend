@@ -1,4 +1,3 @@
-const User = require("../models/user");
 const Assets = require("../models/Assets");
 const { Router } = require("express");
 const router = Router();

@@ -18,11 +18,6 @@ app.use(express.json());
 // Routes
 //////////////////////
 
-app.get("/", (req, res) => {
-  console.log("hit");
-  console.log("req", req);
-  res.json(req.payload);
-});
 // app.use("/user", UserRouter);
 app.use("/assets", AssetRouter);
 
