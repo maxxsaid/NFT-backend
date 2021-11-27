@@ -2,17 +2,15 @@ const User = require("../models/user");
 const Assets = require("../models/Assets");
 const { Router } = require("express");
 const router = Router();
-const auth = require("../auth");
 
 const fetch = (url) =>
   import("node-fetch").then(({ default: fetch }) => fetch(url));
 
 const SALE_COUNT_URL =
   "https://api.opensea.io/api/v1/assets?order_by=sale_count&order_direction=desc&offset=0&limit=20";
-
 const getAssets = async () => {
-  await Assets.deleteMany({});
   let [response, data] = [null, null];
+  await Assets.deleteMany({});
   response = await fetch(SALE_COUNT_URL);
   data = await response.json();
   data.assets.forEach((asset) => {
@@ -40,8 +38,8 @@ router.get("/", async (req, res) => {
 
 //Create Route
 router.post("/", async (req, res) => {
-  const [address, token] = [req.body.address, req.body.token];
   try {
+    const [address, token] = [req.body.address, req.body.token];
     const response = await fetch(
       `https://api.opensea.io/api/v1/asset/${address}/${token}/`
     );
@@ -78,5 +76,4 @@ router.delete("/:id", async (req, res) => {
     res.status(400).json({ error });
   }
 });
-
 module.exports = router;
