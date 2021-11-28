@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
     await Assets.create({
       name: asset.name,
       sales: asset.num_sales,
-      img: asset.image_url,
+      img: asset.collection.image_url,
       site: asset.external_link,
       slug: asset.slug,
       description: asset.description,
