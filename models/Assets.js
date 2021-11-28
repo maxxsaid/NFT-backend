@@ -14,7 +14,7 @@ const assetSchema = new Schema(
   },
   { timestamps: true }
 );
-
+console.log("test");
 const Assets = model("Assets", assetSchema);
 
 module.exports = Assets;
